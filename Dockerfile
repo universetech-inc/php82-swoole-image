@@ -39,7 +39,7 @@ RUN set -ex \
     && echo "extension=decimal.so" > /usr/local/etc/php/conf.d/00_decimal.ini \
     && cd /\
     # remmove tmp dir
-    && rm -rf /tmp/*
+    && rm -rf /tmp/*  \
     # override php.ini
     && echo "memory_limit=1G" > /usr/local/etc/php/conf.d/00_default.ini \
     && echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
