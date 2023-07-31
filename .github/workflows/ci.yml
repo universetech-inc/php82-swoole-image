@@ -8,8 +8,8 @@ name: Create and publish a Docker image
 on:
   push:
     branches: ['main']
-    tags:
-      - '*'
+    # tags:
+    #   - '*'
 
 env:
   REGISTRY: ghcr.io
@@ -54,7 +54,9 @@ jobs:
           tag: "slim"
 
       - name: Push Docker image
-        run: docker image push "${{ github.repository }}" --all-tags
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker image push "${{ github.repository }}" --all-tags
 
       # Dump the report
       - run: echo "${REPORT}"
