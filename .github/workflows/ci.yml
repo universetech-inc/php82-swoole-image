@@ -39,10 +39,24 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      - name: Build Docker image
+        uses: docker/build-push-action@v4
         with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          push: false
+          tags: ${{ github.repository }}:latest
+
+      - name: Slim fat Docker image
+        uses: kitabisa/docker-slim-action@v1
+        env:
+          DSLIM_HTTP_PROBE: false
+        with:
+          target: ${{ github.repository }}:latest
+          tag: "slim"
+
+      - name: Push Docker image
+        run: docker image push "${{ github.repository }}" --all-tags
+
+      # Dump the report
+      - run: echo "${REPORT}"
+        env:
+          REPORT: ${{ steps.slim.outputs.report }}
