@@ -56,7 +56,7 @@ jobs:
       - name: Push Docker image
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker image push "${{ github.repository }}" --all-tags
+          docker image push "${{ env.REGISTRY }}/${{ github.repository }}" --all-tags
 
       # Dump the report
       - run: echo "${REPORT}"
