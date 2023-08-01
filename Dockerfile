@@ -4,9 +4,7 @@ ENV TZ=Asia/Taipei
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN set -ex && \
-    # install dependencies
-    apt-get -y update && apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libzip-dev \
+RUN apt-get -y update && apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libzip-dev \
     libonig-dev libcurl4-openssl-dev autoconf libssl-dev pkg-config libmpdec-dev procps vim iputils-ping tmux htop unzip && \
     # clear out the local repository of retrieved package files
     apt-get remove -y --purge software-properties-common && \
