@@ -43,14 +43,14 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: false
-          tags: ${{ github.repository }}:latest
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}:latest
 
       - name: Slim fat Docker image
         uses: kitabisa/docker-slim-action@v1
         env:
           DSLIM_HTTP_PROBE: false
         with:
-          target: ${{ github.repository }}:latest
+          target: ${{ env.REGISTRY }}/${{ github.repository }}:latest
           tag: "slim"
 
       - name: Push Docker image
