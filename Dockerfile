@@ -23,5 +23,10 @@ RUN curl -sfL https://getcomposer.org/installer | php -- --install-dir=/usr/bin 
 # Override php.ini
     echo "memory_limit=1G" > /usr/local/etc/php/conf.d/00_default.ini && \
     echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini && \
+# Install hashicorp vault
+    cd /tmp && \
+    curl -LO https://releases.hashicorp.com/vault/1.13.0/vault_1.13.0_linux_amd64.zip && \
+    unzip vault_1.13.0_linux_amd64.zip && rm vault_1.13.0_linux_amd64.zip && \
+    mv vault /usr/local/bin && \
 # Clean tmp files
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
