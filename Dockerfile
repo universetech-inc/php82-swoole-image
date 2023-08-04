@@ -8,10 +8,12 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN curl -sfL https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
     chmod +x /usr/bin/composer && \
     composer self-update 2.5.5 && \
-    apt update -y && apt install -y -qq git curl autoconf pkg-config libmpdec-dev procps vim iputils-ping tmux htop unzip cron libcurl4-openssl-dev libssl-dev && \
+    apt update -y && apt install -y -qq git curl autoconf pkg-config libmpdec-dev libzip-dev procps vim iputils-ping tmux htop unzip cron libcurl4-openssl-dev libssl-dev && \
     apt remove -y --purge software-properties-common && \
     apt autoremove -y && \
     apt clean && \
+# Install PHP extensions
+    docker-php-ext-install zip pcntl opcache && \
 # Install decimal extension
     cd /tmp && \
     curl -LO https://github.com/php-decimal/ext-decimal/archive/1.x-php8.zip && unzip ./1.x-php8.zip && \
